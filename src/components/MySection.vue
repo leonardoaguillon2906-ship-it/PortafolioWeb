@@ -24,7 +24,8 @@
         <h2>Bienvenido</h2>
         <p>
           Esta es mi sección principal. Aquí puedes agregar información,
-          descripción, botones o lo que tú quieras.
+          descripción, botones o lo que tú quieras, lo importante es la mejora y fortalecer la confianza
+          con el usuario.
         </p>
 
         <div class="buttons">

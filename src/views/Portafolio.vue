@@ -258,4 +258,65 @@ export default {
 .right-arrow {
   right: 20px;
 }
+/* --- EFECTOS AVANZADOS DARK NEON --- */
+
+/* Partículas flotando */
+.slider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, rgba(0,255,200,0.4), transparent),
+    radial-gradient(2px 2px at 80% 70%, rgba(0,255,255,0.4), transparent),
+    radial-gradient(3px 3px at 50% 50%, rgba(0,120,255,0.35), transparent);
+  animation: floatParticles 12s infinite linear;
+}
+
+@keyframes floatParticles {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-60px); }
+}
+
+/* Glow pulsante */
+.chat-bubble {
+  animation: neonPulse 3s infinite alternate ease-in-out;
+}
+@keyframes neonPulse {
+  0% { box-shadow: 0 0 25px rgba(0,255,180,0.55); }
+  100% { box-shadow: 0 0 45px rgba(0,255,255,0.95); }
+}
+
+/* Bordes animados neon */
+.chat-bubble {
+  position: relative;
+  overflow: hidden;
+}
+.chat-bubble::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(0,255,255,0.45);
+  filter: blur(6px);
+  animation: borderGlow 4s linear infinite;
+}
+@keyframes borderGlow {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+/* Efecto glitch leve en el título */
+h2 {
+  position: relative;
+  animation: glitchMove 1.5s infinite alternate;
+}
+@keyframes glitchMove {
+  0% { text-shadow: 2px 2px rgba(0,255,255,0.4); }
+  100% { text-shadow: -2px -2px rgba(0,255,180,0.5); }
+}
+
 </style>

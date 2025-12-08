@@ -30,12 +30,14 @@
 
         <div class="buttons">
 
-          <!-- BOTÓN PORTAFOLIO COMO router-link PERO ESTILO BOTÓN -->
+          <!-- BOTÓN PORTAFOLIO -->
           <router-link to="/portafolio" class="btn primary">
             Ver portafolio
           </router-link>
 
-          <button class="btn outline" @click="goCV">Descargar CV</button>
+          <!-- DESCARGAR CV DESDE /public -->
+          <a href="/LeonardoCV.pdf" download class="btn outline">Descargar CV</a>
+
         </div>
       </div>
 
@@ -51,11 +53,6 @@ export default {
   data() {
     return {
       imagen
-    }
-  },
-  methods: {
-    goCV() {
-      this.$router.push('/cv')
     }
   }
 }
@@ -206,14 +203,14 @@ export default {
   transform: translateY(-2px) scale(1.05);
 }
 
-/* ===== ESTILOS PARA router-link COMO BOTÓN ===== */
-a.btn {
+/* ===== ESTILOS ROUTER-LINK COMO BOTÓN ===== */
+.a.btn {
   text-decoration: none !important;
   color: white !important;
   display: inline-block;
 }
 
-a.btn.primary:hover {
+.a.btn.primary:hover {
   transform: translateY(-2px) scale(1.05);
 }
 

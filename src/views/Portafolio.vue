@@ -2,21 +2,14 @@
   <section class="slider" :class="theme" ref="sliderRef">
 
     <!-- INDICADORES (PUNTITOS) -->
-    <div class="dots">
-      <span
-        v-for="(slide, index) in slides"
-        :key="index"
-        :class="['dot', { activeDot: currentSlide === index }]"
-        @click="goToSlide(index)"
-      ></span>
-    </div>
+    
 
     <!-- DIAPOSITIVAS COVERFLOW -->
     <div
       class="slide"
       v-for="(slide, index) in slides"
       :key="index"
-      :style="{ background: slide.background }"
+      :style="{ backgroundImage: `url(${slide.background})`, backgroundSize: 'cover', backgroundPosition: 'center' }"
       :class="{
         active: currentSlide === index,
         prev: index === currentSlide - 1,
@@ -24,6 +17,7 @@
       }"
     >
       <div :class="['chat-bubble', slide.side]">
+        <img v-if="slide.image" :src="slide.image" class="slide-image" />
         <h2>{{ slide.title }}</h2>
         <ul>
           <li v-for="item in slide.items" :key="item">{{ item }}</li>
@@ -61,25 +55,29 @@ export default {
         {
           title: "Habilidades",
           side: "left",
-          background: "linear-gradient(135deg,#001f3f,#003366)",
+          background: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+          image: "https://cdn-icons-png.flaticon.com/512/919/919825.png",
           items: ["Vue.js", "JavaScript", "UI Design", "Bases de datos"]
         },
         {
           title: "Actitudes",
           side: "right",
-          background: "linear-gradient(135deg,#33001b,#ff0084)",
+          background: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+          image: "https://cdn-icons-png.flaticon.com/512/1828/1828884.png",
           items: ["Responsable", "Organizado", "Trabajo en equipo"]
         },
         {
           title: "Aptitudes",
           side: "left",
-          background: "linear-gradient(135deg,#0f2027,#203a43,#2c5364)",
+          background: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+          image: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
           items: ["Pensamiento lógico", "Creatividad", "Resolución de problemas"]
         },
         {
           title: "Proyectos",
           side: "right",
-          background: "linear-gradient(135deg,#1e3c72,#2a5298)",
+          background: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+          image: "https://cdn-icons-png.flaticon.com/512/9068/9068848.png",
           items: ["Chatbot WhatsApp", "Dashboard Vue + Node.js", "API REST"]
         }
       ]
@@ -107,14 +105,12 @@ export default {
       this.currentSlide = i;
     },
 
-    // AUTOPLAY
     startAutoplay() {
       this.autoplayInterval = setInterval(() => {
         this.nextSlide();
       }, 3500);
     },
 
-    // DESLIZAR EN MÓVIL
     addTouchControls() {
       const slider = this.$refs.sliderRef;
 
@@ -131,8 +127,8 @@ export default {
     handleSwipe() {
       const diff = this.endX - this.startX;
 
-      if (diff > 50) this.prevSlide();   // swipe derecha
-      if (diff < -50) this.nextSlide();  // swipe izquierda
+      if (diff > 50) this.prevSlide();
+      if (diff < -50) this.nextSlide();
     },
 
     toggleTheme() {
@@ -143,10 +139,9 @@ export default {
 </script>
 
 <style scoped>
-.slider.dark { background: #000; }
+.slider.dark { background: radial-gradient(circle at center, #02030a, #000); color: #00ffc8; }
 .slider.light { background: #e7e7e7; color: #000; }
 
-/* Contenedor */
 .slider {
   width: 100vw;
   height: 100vh;
@@ -157,7 +152,14 @@ export default {
   align-items: center;
 }
 
-/* Indicadores */
+.slide-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px rgba(0,255,255,0.4));
+}
+
 .dots {
   position: absolute;
   bottom: 70px;
@@ -177,7 +179,6 @@ export default {
   transform: scale(1.3);
 }
 
-/* COVERFLOW */
 .slide {
   width: 80vw;
   height: 80vh;
@@ -209,18 +210,17 @@ export default {
   z-index: 1;
 }
 
-/* Burbuja */
 .chat-bubble {
   padding: 2rem;
   border-radius: 1rem;
   max-width: 450px;
-  backdrop-filter: blur(12px);
-  background: rgba(20,20,30,0.5);
-  border: 1px solid rgba(0,255,255,0.3);
-  box-shadow: 0 0 20px rgba(0,255,255,0.35);
+  backdrop-filter: blur(14px);
+  background: rgba(5,5,15,0.7);
+  border: 1px solid rgba(0,255,180,0.6);
+  box-shadow: 0 0 35px rgba(0,255,180,0.55), 0 0 60px rgba(0,255,255,0.25);
+  text-align: center;
 }
 
-/* Botón de modo */
 .theme-toggle {
   position: absolute;
   top: 20px;
@@ -234,7 +234,6 @@ export default {
   font-size: 1.2rem;
 }
 
-/* Controles */
 .controls {
   position: absolute;
   top: 50%;
@@ -243,26 +242,20 @@ export default {
 }
 .arrow {
   position: absolute;
-  background: rgba(0,255,255,0.3);
-  border: 1px solid #00ffff;
+  background: rgba(0,255,200,0.18);
+  border: 1px solid #00ffd5;
   padding: 0.6rem 1rem;
   border-radius: 0.5rem;
-  color: #00ffff;
+  color: #00ffe7;
   cursor: pointer;
   font-size: 2rem;
+  box-shadow: 0 0 15px rgba(0,255,220,0.45);
+  text-shadow: 0 0 8px rgba(0,255,255,0.9);
 }
 .left-arrow {
   left: 20px;
 }
 .right-arrow {
   right: 20px;
-}
-.controls button {
-  background: rgba(0,255,255,0.3);
-  border: 1px solid #00ffff;
-  padding: 0.4rem 1rem;
-  border-radius: 0.5rem;
-  color: #00ffff;
-  cursor: pointer;
 }
 </style>

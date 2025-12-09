@@ -2,24 +2,29 @@
   <transition name="fade-slide">
     <header :class="['header', { 'header--scrolled': isScrolled }]">
       <div class="header__container">
-        <h1 class="header__title">Mi Portafolio</h1>
+
+        <!-- 🔥 LOGO + TÍTULO -->
+        <h1 class="header__title">
+          <img src="/logo2.png" alt="Logo" class="header__logo" />
+          Mi Portafolio
+        </h1>
 
         <nav class="nav">
           <ul class="nav__list">
 
-            <!-- INICIO - Usa Vue Router -->
+            <!-- INICIO -->
             <li>
               <router-link to="/" class="nav__link">Inicio</router-link>
             </li>
 
-            <!-- SERVICIOS - Scroll suave -->
+            <!-- SERVICIOS -->
             <li>
               <router-link to="/servicios" class="nav__link">
                 Servicios
               </router-link>
             </li>
 
-            <!-- CONTACTO - Usa Vue Router -->
+            <!-- SOBRE MÍ -->
             <li>
               <router-link to="/form" class="nav__link">Sobre mi</router-link>
             </li>
@@ -48,7 +53,6 @@ export default {
       this.isScrolled = window.scrollY > 50;
     },
 
-    /* 🔥 Scroll suave a la sección de servicios */
     scrollToServicios() {
       const section = document.getElementById("servicios");
       if (section) {
@@ -70,7 +74,6 @@ export default {
     opacity: 0;
     transform: translateY(-15px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -99,7 +102,7 @@ export default {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* ==== CONTENEDOR INTERNO ==== */
+/* ==== CONTENEDOR ==== */
 .header__container {
   max-width: 1100px;
   margin: 0 auto;
@@ -115,14 +118,29 @@ export default {
   font-size: 1.6rem;
   font-weight: 600;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   transition: color 0.4s ease;
+}
+
+/* ==== LOGO ==== */
+.header__logo {
+  width: 40px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.header--scrolled .header__logo {
+  transform: scale(0.9);
 }
 
 .header--scrolled .header__title {
   color: #42b983;
 }
 
-/* ==== NAVEGACIÓN ==== */
+/* ==== MENÚ ==== */
 .nav__list {
   list-style: none;
   display: flex;
@@ -140,7 +158,6 @@ export default {
   transition: color 0.3s ease;
 }
 
-/* Hover */
 .nav__link::after {
   content: "";
   position: absolute;
@@ -161,7 +178,7 @@ export default {
   width: 60%;
 }
 
-/* Responsive */
+/* ==== RESPONSIVE ==== */
 @media (max-width: 768px) {
   .header__container {
     flex-direction: column;

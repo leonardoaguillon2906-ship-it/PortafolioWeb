@@ -184,6 +184,11 @@ export default {
   border-radius: 999px;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none !important;
+}
+
+a.btn, router-link.btn {
+  text-decoration: none !important;
 }
 
 .btn.primary {
@@ -200,17 +205,6 @@ export default {
 }
 
 .btn:hover {
-  transform: translateY(-2px) scale(1.05);
-}
-
-/* ===== ESTILOS ROUTER-LINK COMO BOTÓN ===== */
-.a.btn {
-  text-decoration: none !important;
-  color: white !important;
-  display: inline-block;
-}
-
-.a.btn.primary:hover {
   transform: translateY(-2px) scale(1.05);
 }
 

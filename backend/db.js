@@ -1,7 +1,7 @@
 import mysql from "mysql2/promise";
 
 export const db = await mysql.createConnection({
-  host: "127.0.0.1",
+  host: "localhost",
   port: 3300,          // puerto real
   user: "root",
   password: "M771699dl*",        // si tienes contraseña, colócala aquí

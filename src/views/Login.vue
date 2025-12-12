@@ -40,6 +40,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { login } from '@/api/authService'   // Importar servicio
 
 const router = useRouter()
 
@@ -53,21 +54,19 @@ async function onSubmit() {
   loading.value = true
 
   try {
-    await new Promise(resolve => setTimeout(resolve, 800))
-
-    if (email.value !== 'admin@example.com' || password.value !== '123456') {
-      throw new Error('Credenciales incorrectas')
-    }
+    const result = await login(email.value, password.value)
+    console.log("Usuario autenticado:", result)
 
     router.push('/crud')
 
   } catch (err) {
-    errorMessage.value = err.message || 'Error desconocido'
+    errorMessage.value = err.message
   } finally {
     loading.value = false
   }
 }
 </script>
+
 
 <style scoped>
 .login-wrapper {

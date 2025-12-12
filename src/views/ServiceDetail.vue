@@ -1,209 +1,182 @@
 <template>
-  <section class="service-detail">
+  <section class="detalle">
+    <div class="container" v-if="service">
+      
+      <button class="back-btn" @click="$router.back()">Volver</button>
 
-    <div class="card-container">
+      <img :src="service.image" class="header-img" />
 
-      <!-- Título -->
-      <h1 class="title">{{ service.title }}</h1>
+      <h2 class="title">{{ service.title }}</h2>
 
-      <!-- Imagen con efecto flotante -->
-      <div class="image-wrapper">
-        <img :src="service.image" class="detail-img" />
+      <p class="desc">{{ service.description }}</p>
+
+      <h3 class="subtitle">Características Principales</h3>
+      <ul class="list">
+        <li v-for="(item, index) in service.features" :key="index">
+          {{ item }}
+        </li>
+      </ul>
+
+      <h3 class="subtitle">Tecnologías Utilizadas</h3>
+      <div class="tech-grid">
+        <span v-for="(tech, index) in service.technologies" :key="index" class="tech-chip">
+          {{ tech }}
+        </span>
       </div>
-
-      <!-- Descripción -->
-      <p class="description">
-        {{ service.full_description }}
-      </p>
-
-      <!-- Botón volver -->
-      <button class="back-btn" @click="$router.push('/')">
-        <span>Volver</span>
-      </button>
 
     </div>
 
+    <div v-else class="not-found">
+      <h2>Servicio no encontrado</h2>
+    </div>
   </section>
 </template>
 
 <script>
 export default {
   name: "ServiceDetail",
+
   data() {
     return {
-      service: {},
+      services: [
+        {
+          id: 0,
+          title: "Desarrollo Web",
+          description: "Creación de sitios web modernos, optimizados y totalmente responsivos. Incluye diseño UI/UX, integración de APIs, optimización SEO y despliegue en servidores nube.",
+          features: [
+            "Arquitectura escalable",
+            "Responsive Design",
+            "Integración con APIs REST y GraphQL",
+            "Optimización SEO y rendimiento"
+          ],
+          technologies: ["Vue.js", "Node.js", "TailwindCSS", "MongoDB"],
+          image: require("@/assets/card1.avif")
+        },
+
+        {
+          id: 1,
+          title: "Apps Móviles",
+          description: "Desarrollo de aplicaciones móviles nativas e híbridas para Android e iOS. Integración con sensores, almacenamiento local, notificaciones push, etc.",
+          features: [
+            "Apps nativas y multiplataforma",
+            "Alto rendimiento",
+            "Integración con APIs externas",
+            "Publicación en Play Store y App Store"
+          ],
+          technologies: ["Flutter", "Kotlin", "Swift", "Firebase"],
+          image: require("@/assets/card2.jpg")
+        },
+
+        {
+          id: 2,
+          title: "Inteligencia Artificial",
+          description: "Soluciones basadas en IA, como modelos predictivos, análisis de datos, chatbots, automatización inteligente y sistemas de recomendación.",
+          features: [
+            "Entrenamiento de modelos ML",
+            "Automatización de procesos",
+            "Chatbots y NLP",
+            "Sistemas expertos"
+          ],
+          technologies: ["Python", "TensorFlow", "PyTorch", "FastAPI"],
+          image: require("@/assets/card3.png")
+        }
+      ],
+
+      service: null
     };
   },
-  mounted() {
-    const id = Number(this.$route.params.id);
 
-    const allServices = [
-      {
-        id: 0,
-        title: "Desarrollo Web",
-        full_description:
-          "Creamos sitios web de alto rendimiento con efectos modernos, optimización avanzada y UX impecable.",
-        image: require("@/assets/card1.avif"),
-      },
-      {
-        id: 1,
-        title: "Aplicaciones Móviles",
-        full_description:
-          "Apps híbridas y nativas con animaciones fluidas, arquitectura sólida y un diseño que impacta.",
-        image: require("@/assets/card2.jpg"),
-      },
-      {
-        id: 2,
-        title: "Inteligencia Artificial",
-        full_description:
-          "Soluciones predictivas, automatización inteligente y análisis de datos con tecnologías IA.",
-        image: require("@/assets/card3.png"),
-      },
-    ];
-
-    this.service = allServices[id];
-  },
+  created() {
+    const id = parseInt(this.$route.params.id);
+    this.service = this.services.find(s => s.id === id) || null;
+  }
 };
 </script>
 
 <style scoped>
-/* Fondo futurista */
-.service-detail {
-  min-height: 100vh;
-  padding: 3rem 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: radial-gradient(circle at top, #0a0f18, #06080d);
-  overflow: hidden;
-  color: #ffffff;
-  position: relative;
+.detalle {
+  padding: 3rem 1.5rem;
+  background: linear-gradient(180deg, #0f0f0f, #1a1a1a);
+  color: white;
 }
 
-/* Partículas sutiles */
-.service-detail::before {
-  content: "";
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  background: repeating-radial-gradient(
-    circle at center,
-    rgba(0, 200, 255, 0.2) 0,
-    rgba(0, 200, 255, 0.04) 2px,
-    transparent 5px
-  );
-  opacity: 0.06;
-  animation: rotate 60s linear infinite;
-}
-
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Contenedor central tipo glassmorphism */
-.card-container {
-  backdrop-filter: blur(18px);
-  background: rgba(255, 255, 255, 0.07);
-  padding: 3rem 2rem;
-  width: min(600px, 90%);
-  border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 25px rgba(0, 200, 255, 0.3),
-              0 0 70px rgba(0, 200, 255, 0.1);
+.container {
+  max-width: 800px;
+  margin: auto;
   text-align: center;
-  position: relative;
-  z-index: 2;
-  animation: fadeIn 1.2s ease forwards;
-  transform: translateY(25px);
-  opacity: 0;
 }
 
-@keyframes fadeIn {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Título neon */
-.title {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 15px #00d9ff, 0 0 25px #00aaff;
-}
-
-/* Imagen flotante */
-.image-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-}
-
-.detail-img {
-  width: 280px;
-  border-radius: 18px;
-  box-shadow: 0 0 25px rgba(0, 200, 255, 0.4),
-              0 0 45px rgba(0, 120, 255, 0.2);
-  animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-/* Texto */
-.description {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  opacity: 0.9;
-  margin-bottom: 2rem;
-}
-
-/* Botón futurista */
 .back-btn {
-  position: relative;
-  padding: 0.9rem 2.2rem;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  background: rgba(0, 200, 255, 0.2);
-  color: #00eaff;
+  background: none;
+  border: 1px solid #42b983;
+  padding: 0.5rem 1rem;
+  color: #42b983;
+  border-radius: 8px;
   cursor: pointer;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: 0.3s ease;
-  overflow: hidden;
-}
-
-.back-btn::before {
-  content: "";
-  position: absolute;
-  width: 120%;
-  height: 120%;
-  left: -10%;
-  top: -10%;
-  background: linear-gradient(135deg, #00eaff, #007bff);
-  opacity: 0;
-  transition: 0.3s ease;
-  border-radius: 12px;
-}
-
-.back-btn:hover::before {
-  opacity: 0.25;
+  margin-bottom: 1rem;
+  transition: 0.3s;
 }
 
 .back-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 18px rgba(0, 200, 255, 0.6);
+  background: #42b983;
+  color: black;
+}
+
+.header-img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px #42b983;
+}
+
+.desc {
+  opacity: 0.9;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+
+.list {
+  text-align: left;
+  margin: auto;
+  max-width: 600px;
+}
+
+.list li {
+  margin: 0.4rem 0;
+  opacity: 0.9;
+}
+
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.tech-chip {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #42b983;
+  font-size: 0.85rem;
+}
+
+.not-found {
+  text-align: center;
+  margin-top: 3rem;
 }
 </style>

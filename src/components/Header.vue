@@ -29,6 +29,13 @@
               <router-link to="/form" class="nav__link">Sobre mi</router-link>
             </li>
 
+            <!-- 🔐 LOGIN (BOTÓN NUEVO) -->
+            <li>
+              <router-link to="/login" class="nav__link nav__login-btn">
+                Iniciar sesión
+              </router-link>
+            </li>
+
           </ul>
         </nav>
       </div>
@@ -176,6 +183,18 @@ export default {
 
 .nav__link:hover::after {
   width: 60%;
+}
+
+/* ==== BOTÓN LOGIN ==== */
+.nav__login-btn {
+  padding: 6px 14px;
+  border: 1px solid #42b983;
+  border-radius: 6px;
+}
+
+.nav__login-btn:hover {
+  background-color: #42b983;
+  color: #ffffff !important;
 }
 
 /* ==== RESPONSIVE ==== */

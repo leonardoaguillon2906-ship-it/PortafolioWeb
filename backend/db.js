@@ -1,11 +1,11 @@
 import mysql from "mysql2/promise";
 
 export const db = await mysql.createConnection({
-  host: process.env.MYSQLHOST,
-  port: process.env.MYSQLPORT,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE
+  host: mysql.railway.internal,
+  port: 3306,
+  user: root,
+  password: iiurynpOzbammAmMBZCilREmfaNPVnjt,
+  database: railway
 });
 
 console.log("Conectado correctamente a MySQL (Railway)");
